@@ -14,7 +14,231 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      case_findings: {
+        Row: {
+          case_id: string
+          created_at: string
+          id: string
+          module_category: string | null
+          module_name: string
+          module_slug: string
+          query: string | null
+          result_json: Json | null
+          user_id: string
+        }
+        Insert: {
+          case_id: string
+          created_at?: string
+          id?: string
+          module_category?: string | null
+          module_name: string
+          module_slug: string
+          query?: string | null
+          result_json?: Json | null
+          user_id: string
+        }
+        Update: {
+          case_id?: string
+          created_at?: string
+          id?: string
+          module_category?: string | null
+          module_name?: string
+          module_slug?: string
+          query?: string | null
+          result_json?: Json | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_findings_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "case_findings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "skid_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cases: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          notes: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          notes?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cases_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "skid_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          thread_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          thread_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          thread_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "chat_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_threads: {
+        Row: {
+          case_id: string | null
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          case_id?: string | null
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          case_id?: string | null
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_threads_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_threads_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "skid_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      skid_accounts: {
+        Row: {
+          created_at: string
+          handle: string
+          handle_lower: string
+          id: string
+          role: string
+          secret_id: string
+          tier: string
+          total_lookups: number
+        }
+        Insert: {
+          created_at?: string
+          handle: string
+          handle_lower: string
+          id?: string
+          role?: string
+          secret_id: string
+          tier?: string
+          total_lookups?: number
+        }
+        Update: {
+          created_at?: string
+          handle?: string
+          handle_lower?: string
+          id?: string
+          role?: string
+          secret_id?: string
+          tier?: string
+          total_lookups?: number
+        }
+        Relationships: []
+      }
+      usage_stats: {
+        Row: {
+          daily_usage: number
+          last_reset_at: string
+          one_time_credits: number
+          user_id: string
+        }
+        Insert: {
+          daily_usage?: number
+          last_reset_at?: string
+          one_time_credits?: number
+          user_id: string
+        }
+        Update: {
+          daily_usage?: number
+          last_reset_at?: string
+          one_time_credits?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "usage_stats_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "skid_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
