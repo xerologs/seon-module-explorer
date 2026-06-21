@@ -1,0 +1,183 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-crimson: var(--crimson);
+  --color-crimson-glow: var(--crimson-glow);
+  --color-obsidian: var(--obsidian);
+  --color-blood: var(--blood);
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Cyber-intelligence palette: obsidian black → velvet crimson */
+  --obsidian: oklch(0.08 0.01 20);
+  --blood: oklch(0.32 0.18 25);
+  --crimson: oklch(0.55 0.24 22);
+  --crimson-glow: oklch(0.68 0.27 22);
+
+  --background: oklch(0.09 0.012 20);
+  --foreground: oklch(0.96 0.005 20);
+
+  --card: oklch(0.13 0.02 20 / 70%);
+  --card-foreground: oklch(0.96 0.005 20);
+
+  --popover: oklch(0.11 0.018 20);
+  --popover-foreground: oklch(0.96 0.005 20);
+
+  --primary: oklch(0.55 0.24 22);
+  --primary-foreground: oklch(0.98 0.005 20);
+
+  --secondary: oklch(0.18 0.03 20);
+  --secondary-foreground: oklch(0.96 0.005 20);
+
+  --muted: oklch(0.16 0.022 20);
+  --muted-foreground: oklch(0.65 0.03 20);
+
+  --accent: oklch(0.32 0.18 25);
+  --accent-foreground: oklch(0.98 0.005 20);
+
+  --destructive: oklch(0.55 0.24 22);
+  --destructive-foreground: oklch(0.98 0.005 20);
+
+  --border: oklch(0.55 0.24 22 / 22%);
+  --input: oklch(0.55 0.24 22 / 30%);
+  --ring: oklch(0.68 0.27 22);
+}
+
+.dark {
+  --background: oklch(0.09 0.012 20);
+  --foreground: oklch(0.96 0.005 20);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--obsidian);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--crimson);
+    color: var(--primary-foreground);
+  }
+}
+
+@utility text-glow {
+  text-shadow:
+    0 0 18px oklch(0.6 0.26 22 / 55%),
+    0 0 60px oklch(0.55 0.24 22 / 30%);
+}
+
+@utility border-glow {
+  box-shadow:
+    0 0 0 1px oklch(0.55 0.24 22 / 35%),
+    0 0 30px oklch(0.55 0.24 22 / 18%),
+    inset 0 1px 0 oklch(1 0 0 / 4%);
+}
+
+@utility border-glow-strong {
+  box-shadow:
+    0 0 0 1px oklch(0.6 0.26 22 / 55%),
+    0 0 40px oklch(0.6 0.26 22 / 35%),
+    inset 0 1px 0 oklch(1 0 0 / 6%);
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(to right, oklch(0.55 0.24 22 / 8%) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.55 0.24 22 / 8%) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+@utility crimson-gradient {
+  background-image: linear-gradient(135deg, oklch(0.5 0.24 22), oklch(0.32 0.18 25) 60%, oklch(0.12 0.02 20));
+}
+
+@utility section-fade {
+  background-image: linear-gradient(180deg, transparent, oklch(0.09 0.012 20) 90%);
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0, 0); text-shadow: 0 0 18px oklch(0.6 0.26 22 / 60%); }
+  20% { transform: translate(-2px, 1px); text-shadow: 2px 0 oklch(0.7 0.27 22), -2px 0 oklch(0.5 0.2 240); }
+  40% { transform: translate(2px, -1px); text-shadow: -2px 0 oklch(0.7 0.27 22), 2px 0 oklch(0.5 0.2 240); }
+  60% { transform: translate(-1px, 0); text-shadow: 0 0 22px oklch(0.6 0.26 22 / 70%); }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.6 0.26 22 / 45%); }
+  50% { box-shadow: 0 0 40px 6px oklch(0.6 0.26 22 / 25%); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@utility animate-glitch {
+  animation: glitch 2.6s steps(1, end) 1;
+}
+@utility animate-scan {
+  animation: scan 6s linear infinite;
+}
+@utility animate-pulse-glow {
+  animation: pulse-glow 2.8s ease-in-out infinite;
+}
+@utility animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@utility reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@utility reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
