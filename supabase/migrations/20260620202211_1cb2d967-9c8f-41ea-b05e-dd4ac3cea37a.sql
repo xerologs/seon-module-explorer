@@ -1,0 +1,1 @@
+ALTER TABLE public.skid_accounts ALTER COLUMN tier SET DEFAULT 'Guest';

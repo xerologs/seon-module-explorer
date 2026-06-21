@@ -1,29 +1,43 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Nav } from "@/components/skid/Nav";
+import { Footer } from "@/components/skid/Footer";
+import { Hero } from "@/components/skid/Hero";
+import { Information } from "@/components/skid/Information";
+import { Pricing } from "@/components/skid/Pricing";
+import { FAQ } from "@/components/skid/FAQ";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "SkidSint — Red-Team Grade OSINT Terminal" },
+      {
+        name: "description",
+        content:
+          "SkidSint aggregates 80+ open intelligence sources into one passive, unattributed terminal for analysts, threat hunters, and red teams.",
+      },
+      { property: "og:title", content: "SkidSint — Red-Team Grade OSINT Terminal" },
+      {
+        property: "og:description",
+        content:
+          "One terminal. 80+ data sources. Passive, unattributed OSINT for analysts and red teams.",
+      },
+      { name: "twitter:title", content: "SkidSint — Red-Team Grade OSINT Terminal" },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen flex flex-col">
+      <Nav />
+      <main className="flex-1">
+        <Hero />
+        <Information />
+        <Pricing />
+        <FAQ />
+      </main>
+      <Footer />
     </div>
   );
 }
