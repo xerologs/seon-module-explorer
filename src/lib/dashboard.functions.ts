@@ -196,7 +196,7 @@ async function requireRole(handle: string, secret_id: string, required: Role[]) 
 export const adminListUsers = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => handleAuth.parse(data))
   .handler(async ({ data }) => {
-    await requireRole(data.handle, data.secret_id, ["support", "admin", "master_admin"]);
+    const actor = await requireRole(data.handle, data.secret_id, ["support", "admin", "master_admin"]);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: accts } = await supabaseAdmin
       .from("skid_accounts" as never)
@@ -210,10 +210,12 @@ export const adminListUsers = createServerFn({ method: "POST" })
     for (const u of (usages as UsageRow[] | null) ?? []) usageMap.set(u.user_id, u);
     return ((accts as (AccountRow & { secret_id: string })[] | null) ?? []).map((a) => {
       const u = usageMap.get(a.id);
+      // Never expose the master_admin's SKID id to anyone but themselves.
+      const isProtected = a.role === "master_admin" && a.id !== actor.id;
       return {
         id: a.id,
         handle: a.handle,
-        secret_id: a.secret_id,
+        secret_id: isProtected ? "••••••••••••••••" : a.secret_id,
         tier: a.tier,
         role: a.role,
         total_lookups: a.total_lookups,

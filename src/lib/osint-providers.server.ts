@@ -182,6 +182,18 @@ export async function runModule(
       });
     }
 
+    case "public-get": {
+      const url = p.urlTemplate.replace(/\{q\}/g, encodeURIComponent(query.trim()));
+      return callJSON(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "user-agent": "SkidSint-OSINT/1.0 (+contact admin)",
+          ...(p.headers ?? {}),
+        },
+      });
+    }
+
     case "coming-soon":
       return {
         ok: false,
