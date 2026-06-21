@@ -30,6 +30,8 @@ export type ProviderConfig =
   | { kind: "tgscan" }
   // OSINT.Industries
   | { kind: "osintindustries"; type: "email" | "phone" | "username" }
+  // Generic public-GET provider. `{q}` in urlTemplate is replaced with URL-encoded query.
+  | { kind: "public-get"; urlTemplate: string; headers?: Record<string, string> }
   // Placeholder for un-shipped modules
   | { kind: "coming-soon" };
 
