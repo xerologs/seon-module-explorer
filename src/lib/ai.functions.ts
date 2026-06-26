@@ -115,7 +115,7 @@ export const sendChatMessage = createServerFn({ method: "POST" })
 
     // Save user message
     await supabaseAdmin.from("chat_messages" as never).insert({
-      thread_id: thread.id, role: "user", content: data.content,
+      thread_id: thread.id, user_id: acct.id, role: "user", content: data.content,
     } as never);
 
     // Load history
@@ -144,7 +144,7 @@ export const sendChatMessage = createServerFn({ method: "POST" })
     const assistant = await chatComplete(messages);
 
     const { data: saved } = await supabaseAdmin.from("chat_messages" as never).insert({
-      thread_id: thread.id, role: "assistant", content: assistant,
+      thread_id: thread.id, user_id: acct.id, role: "assistant", content: assistant,
     } as never).select("id, role, content, created_at").single();
     const savedMsg = (saved ?? { id: "", role: "assistant", content: assistant, created_at: new Date().toISOString() }) as { id: string; role: string; content: string; created_at: string };
 
@@ -173,7 +173,7 @@ export const appendToolResult = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const content = `MODULE RESULT — ${data.slug}("${data.query}"):\n\`\`\`json\n${data.result_json.slice(0, 12_000)}\n\`\`\``;
     await supabaseAdmin.from("chat_messages" as never).insert({
-      thread_id: thread.id, role: "user", content,
+      thread_id: thread.id, user_id: acct.id, role: "user", content,
     } as never);
     return { ok: true };
   });
