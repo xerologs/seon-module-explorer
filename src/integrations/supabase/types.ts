@@ -110,6 +110,7 @@ export type Database = {
           id: string
           role: string
           thread_id: string
+          user_id: string
         }
         Insert: {
           content: string
@@ -117,6 +118,7 @@ export type Database = {
           id?: string
           role: string
           thread_id: string
+          user_id: string
         }
         Update: {
           content?: string
@@ -124,6 +126,7 @@ export type Database = {
           id?: string
           role?: string
           thread_id?: string
+          user_id?: string
         }
         Relationships: [
           {
