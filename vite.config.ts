@@ -12,4 +12,10 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Ensure Nitro builds for the Vercel platform
+  vite: {
+    ssr: {
+      noExternal: true,
+    },
+  },
 });
